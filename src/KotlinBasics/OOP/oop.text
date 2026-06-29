@@ -1,0 +1,50 @@
+oop: (object Oriented Programming) là: Lập trình hướng đối tượng
+   OOP có 4 tính chất
+   1. Encapsulation (Đóng gói)
+   2. Inheritance (Kế thừa)
+   3. Polymorphism (Đa hình)
+   4. Abstraction (Trừu tượng)
+
+* 1. Encapsulation (Đóng gói)
+Encapsulation là Gom dữ liệu và các hàm xử lý dữ liệu đó vào cùng 1 class, đồng thời che giấu dữu liệu không cho bên ngoài truy cập trực tiếp. (bảo vệ dữu liệu)
+-dùng private
+vd:  BankAccount
+
+* 2. Inheritance (Kế thừa)
+Inheritance là Một class có thể kế thừa class khác để sử dụng lại thuộc tính và phương thức (VD: Con được thừa hưởng từ cha).
+Class mặc định là final (không cho kế thừa) -> Muốn cho class khác kế thừa → dùng từ khóa open
++ Ghi đè (override):Muốn class con thay đổi hành vi của hàm class cha
+   - open ở class cha
+   - open ở function cha
+   - override ở function con
+  VD: Person, Student
+
+*  3. Polymorphism (Đa hình)
+cho phép các đối tượng thuộc các lớp khác nhau phản hồi cùng một thông điệp (gọi cùng một hàm) theo những cách khác nhau. Đa hình thường đi kèm với việc ghi đè phương thức (Method Overriding)
+Vd: một hành động -> có nhiều các thực hiện.
+Animal->Dog->Cat đề có  sound() nhưng Dog thì Gâu còn Cat thì Meo
+
++ Runtime Polymorphism: val animal:Animal = Dog() {Compile-> đến kiểu dữ liệu (Animal) -> object thật(Dog) -> Dog.sound()}
++ Compile-time Polymorphism:
+   VD: fun add(a:Int,b:Int)
+       fun add(a:Double,b:Double)
+
+
+ 4. Abstraction (Trừu tượng)
+Abstraction (Trừu tượng): Abstraction là che giấu chi tiết bên trong, chỉ cho người dùng thấy cái cần dùng.
+chỉ cần biết làm cái gì mà không cần biết làm như thế nào
+ - Abstract class (lớp trừu tượng): là một class chưa hoàn chỉnh, bắt buộc class con phải hoàn thiện
+    + 1 class chỉ kế thừa được 1 Abstract Class
+ - Bạn KHÔNG được tạo object từ abstract class (VD: val a = Animal())
+ VD:
+    abstract class Animal {
+
+         abstract fun sound()→ chưa biết làm gì (bắt buộc class con phải tự định nghĩa)
+
+         fun sleep() { → có sẵn luôn
+             println("Đang ngủ")
+         }
+     }
+
+- Interface ( cũng là Abstraction):
+  + Một class có thể triển khai NHIỀU Interface

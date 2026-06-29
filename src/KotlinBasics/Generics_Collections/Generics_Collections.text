@@ -1,0 +1,26 @@
+I. Generics
+Generics là cách khai báo kiểu dữ liệu tổng quát,
+để class hoặc hàm có thể làm việc với nhiều kiểu dữ liệu khác nhau mà vẫn đảm bảo an toàn kiểu (type-safe).
+-> Thay vì viết một class cho Int, một class cho String, một class cho Student,
+ta viết một class duy nhất và thay kiểu dữ liệu bằng một ký hiệu như T
++ Generic Function
+  Không chỉ class. Hàm cũng dùng Generic.
+Vd:fun <T> printData(data: T) {
+       println(data)
+   }
+
+II. Collections
+Collections là tập hợp dữ liệu giúp lưu nhiều dữ liệu trong một biến.
+Trong Kotlin có 4 Collection quan trọng nhất
++ List: Lưu dữ liệu theo thứ tự, Cho phép trùng.
+    VD: val numbers = listOf(1,2,3,2)
+    - MutableList:  VD: val numbers = mutableListOf(1,2,3)
+                        numbers.add(4)
+                        numbers.remove(2)
+
++ Set:Set không cho phép trùng. VD: listOf(1,2,3,2) -> Output: [1,2,3] ( các phần tử trùng bị bỏ lại)
+
++ Map: Map lưu dữ liệu theo Key -> Value
+    VD: val student = mapOf("name" to "An","age" to 20) .  Lấy dữ liệu: println(student["name"])
+
++ Array: Array cũng lưu nhiều dữ liệu nhưng Khác List ở chỗ Array có kích thước cố định.

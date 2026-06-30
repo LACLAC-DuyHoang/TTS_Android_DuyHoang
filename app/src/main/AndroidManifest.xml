@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+<!-- AndroidManifest.xml là file khai báo thông tin của toàn bộ ứng dụng Android
+    Android sẽ đọc file này trước khi chạy ứng dụng để biết :
+    - Tên package, Activity nào là màn hình đầu tiên, Quyền (Permission), Các thành phần của ứng dụng, Icon, Theme
+ -->
+
+<!--  application:  Khai báo thông tin của toàn bộ ứng dụng-->
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Task2">
+<!-- activity: khai báo một màn hình    -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Task2"
+            android:windowSoftInputMode="adjustResize">
+
+            <intent-filter> <!-- Cho Android biết Activity này có thể nhận Intent nào. -->
+                <action android:name="android.intent.action.MAIN" /> <!-- MAIN → điểm bắt đầu chương trình -->
+
+                <category android:name="android.intent.category.LAUNCHER" /> <!-- LAUNCHER → hiện trên màn hình điện thoại -->
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,33 @@
+Parcelable vs Serializable
+- Tại sao cần: khi gửi object giữa activity -> Không thể gửi trực tiếp object phức tạp → phải “serialize”
+    VD; val user = User("Hoàng", 21)   intent.putExtra("user", user)
+    Lỗi Vì Intent chỉ biết truyền các kiểu dữ liệu đơn giản. không hiểu object
+  -> Đó là lý do yêu cầu ob phải chuyển thành dữ liệu có thể ghi và đọc lại -> quá trình này gọi là serialization
+
+Serialization (dùng cho java)
+- Là interface có sẵn
+- Nó giúp biến một object thành chuỗi (serialize) để có thể:
+    + truyền qua intent
+    + Lưu xuống file
+    + gửi qua mạng
+-VD: data class User(
+         val name: String,
+         val age: Int
+     ) : Serializable
+- Reflection: quá trình tự tìm các Field của Serialization
+
+
+Parcelable: (android)
+- Là interface của Android.
+- Nó cũng dùng để chuyển object thành dữ liệu để truyền qua Intent hoặc Bundle.
+- Android tự đọc và ghi dữ liệu theo thứ tự bạn định nghĩa nên nhanh hơn rất nhiều.
+- VD: @Parcelize
+      data class User(
+          val name: String,
+          val age: Int
+      ) : Parcelable
+
+So sánh:
+- Serialization: java, Dễ dùng, Chậm hơn, dùng Reflection, tốn bộ nhớ hơn, Có thể dùng ngoài Android
+- Parcelable: Android, Khó hơn (nếu không dùng @Parcelize), Nhanh hơn, Không dùng Reflection, Tiết kiệm bộ nhớ, Chỉ dùng android
+

@@ -1,0 +1,46 @@
+Res: Đây là thư mục tài nguyên.Không phải code Kotlin.
++ drawable: chứa (ảnh) PNG,JPG, Vector, SVG. VD: avatar.png, background.jpg
++ mipmap: chứa Icon của ứng dụng.  VD: ic_launcher(đây là icon ngoài màn hình điện thoại
++ values: chứa các giá trị tĩnh như chuỗi văn bản (strings.xml), màu sắc (colors.xml), kích thước.
++ layout: chứa các tệp giao diện XML định nghĩa cấu trúc màn hình.
+
+
+
+Activity: Một Activity = Một màn hình của ứng dụng.
+Lifecycle: là Vòng đời của Activity từ lúc được tạo cho đến khi bị hủy.
+    Được tạo -> Hiển thị -> Người dùng sử dụng -> Ẩn -> Bị hủy
+    + Các hàm Lifecycle
+        onCreate() -> onStart() -> onResume() -> Activity đang chạy -> onPause() -> onStop() -> onDestroy()
+
+    - onCreate(): hàm đầu tiên được gọi dùng để tạo giao diện, khởi tạo ViewModel
+      , khởi tạo biến,đọc dữ liệu Intent, kết nối Database, đăng ký Observer
+    - onStart(): hàm được gọi khi Activity bắt đầu hiển thị với người dùng nhưng chưa tương tác.
+    - onResume(): hàm được gọi khi Activity bắt đầu tương tác với người dùng.
+    - onPause(): hàm được gọi khi Activity không còn tương tác (bị che khuất một phần) VD: có cuộc gọi đến.
+    - onStop(): hàm được gọi khi Activity không còn hiển thị (bị che khuất hoàn toàn).
+    - onDestroy(): hàm cuối cùng được gọi trước khi Activity bị hủy hoàn toàn khỏi bộ nhớ.
+
+
+Intent : intent là một đối tượng dùng để yêu cầu Android thực hiện một hành động (hiểu đơn giản Intent = "Lá thư" mang theo yêu cầu)
+- Có 2 loại Intent
+    + Explicit Intent: Biết rõ Activity nào cần mở
+        VD: val intent = Intent(this, DetailActivity::class.java) Ở đây android biết chắc chắn cần phải mở DetailActivity
+            startActivity(intent)
+    + Implicit Intent: không chỉ định Activity nào
+
+- Các hàm phổ biến:
+    + startActivity(): Đây là hàm dùng để mở Activity
+    + finish(): ngược lại, dùng nếu muốn đóng Activity hiện tại
+
+- Truyền dữ liệu bằng Intent:
+  VD: Người dùng nhập tên "Hoàng" -> muốn chuyển sang màn hình khác
+  + Dùng putExtra() để truyền dữ liệu
+    intent.putExtra("name", "Hoàng") // ở đây key = name, value = Hoàng
+  + Dùng getStringExtra(), getIntExtra(),.. Lấy trực tiếp một giá trị,Phù hợp khi chỉ cần vài giá trị, Không cần tạo Bundle
+
+Bundle: là một "chiếc túi" chứa dữ liệu. “Gói dữ liệu để gửi qua màn hình khác” (Bundle = Map<String, Any>)
+    + intent.extras: Lấy toàn bộ Bundle, Cần gọi bundle.get...()
+    VD: val bundle = intent.extras
+        val name = bundle?.getString("name") //?: nếu Nếu bundle khác null thì gọi getString("name"), còn nếu bundle là null thì trả về null
+        val age = bundle?.getInt("age")
+

@@ -1,0 +1,5 @@
+Jetpack Compose: dùng để xây dựng giao diện người dùng bằng Kotlin, theo hướng khai báo (Declarative UI)
+   -> Compose cho phép bạn viết giao diện bằng Kotlin thay vì XML
+- Compose: là (Declarative UI) khai báo giao diện người dùng
+  Trong Compose
+   giao diện được tạo từ các hàm

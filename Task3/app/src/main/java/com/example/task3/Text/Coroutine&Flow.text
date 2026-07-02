@@ -1,0 +1,61 @@
+Coroutine: là một cơ chế của kotlin giúp thực hiện các tac vụ bất động (Asynchronous)
+	   mà không chặn luồng (Thread) đang chạy
+	   -> Coroutine giúp thực hiện các công việc tốn thời gian như : gọi API, đọc database, tải file,.. mà không làm ứng dụng bị đơ
+	VD: Click Button -> Coroutine chạy nền -> UI vẫn hoạt động -> 5s có kết quả
+	- Coroutine giúp tách các công việc dài ra khỏi UI Thread
+	- Coroutine Scope: là phạm vi quản lý vòng đời của Coroutine
+	  VD: viewModelScope.launch {  } // Corountine này sẽ sống cùng ViewModel. Nếu ViewModel bị hủy thì Corountine cũng tự hủy không gây Memory leak
+	- launch : dùng để chạy Corountine , Không trả về kết quả
+	- VD: Button(unclicks = {
+    		viewModelScope.launch {
+       			 delay(3000)
+       			 println("Done")
+   		 }
+		}
+	- suspend function: suspend là từ khóa đánh dấu 1 hàm có thể tạm dừng(suspend) mà không chặn Thread
+	- delay(): Không chặn Thread, UI vẫn hoạt động
+	  + VD: suspend fun getUser() { delay(3000) }
+	  -> Corountine sẽ : Tạm dừng -> không chặn Thread -> 3 giây sau chạy tiếp
+	- Dispatchers: Coroutine có thể chạy trên nhiều Thread khác nhau.
+	   + Dispatchers.Main: .Main dùng cho UI, Compose
+	   + Dispatchers.IO: .IO dùng cho API, Room, File, DataStore
+	   + Dispatchers.Default: .Default dùng cho tính toán, thuật toán
+
+
+Flow: là một luồng dữ liệu bất đồng bộ có thể phát ra nhiều giá trị theo thời gian
+ -> đơn giản Flow như 1 "ống nước" truyền dữ liệu liên tục
+ - Flow rất phù hợp với dữ liệu thay đổi theo thời gian.
+	VD: val flow = flow {emit(1) emit(2) emit(3)} //emit() : gửi dữ liệu
+	- collect(): muốn lấy dữ liệu
+	 VD: flow.collect { println(it) }
+
+Flow và StateFlow khác nhau :
+	Flow					StateFlow
+Có thể không có giá trị 		ban đầu	Luôn phải có giá trị ban đầu
+Chỉ phát khi collect			Luôn giữ giá trị hiện tại
+Không nhớ giá trị cuối			Luôn nhớ giá trị cuối
+Phù hợp cho dữ liệu dạng stream		Phù hợp cho UI State
+
+Khi nào dùng gì:
+	Trường hợp				Dùng
+Gọi API					Coroutine (launch)
+Đọc Room				Coroutine (launch + Dispatchers.IO)
+Đọc DataStore				Flow
+UI State				StateFlow
+Tính toán song song và cần kết quả	async + await()
+Chạy tác vụ không cần kết quả		launch
+
+Những API quan trọng cần nhớ
+
+API			Ý nghĩa
+launch			Khởi chạy Coroutine
+viewModelScope		Coroutine sống cùng ViewModel
+suspend			Hàm có thể tạm dừng mà không chặn Thread
+delay()			Tạm dừng Coroutine, không chặn Thread
+Dispatchers.IO		Chạy tác vụ I/O (API, Room, File)
+Dispatchers.Main	Chạy trên UI Thread
+flow {}			Tạo Flow
+emit()			Phát một giá trị
+collect()		Nhận các giá trị từ Flow
+MutableStateFlow	State có thể thay đổi
+StateFlow		State chỉ đọc cho UI

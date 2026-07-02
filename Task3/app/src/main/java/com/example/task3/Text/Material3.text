@@ -1,0 +1,123 @@
+Material3 là bộ component UI chuẩn của Google cho Android. Thay vì tự vẽ nút, ô nhập, card…, bạn dùng component có sẵn để giao diện đồng nhất, hỗ trợ theme sáng/tối và accessibility tốt hơn
+- Text(): Dùng để hiển thị chữ
+    + VD: Text(text = "Xin chào Jetpack Compose", style = MaterialTheme.typography.headlineSmall)
+    + Một vầi style hay gặp: MaterialTheme.typography.headlineLarge  // Tiêu đề lớn
+                             MaterialTheme.typography.headlineSmall  // Tiêu đề
+                             MaterialTheme.typography.titleMedium    // Tiêu đề card/section
+                             MaterialTheme.typography.bodyLarge      // Nội dung chính
+                             MaterialTheme.typography.bodyMedium     // Nội dung thường
+                             MaterialTheme.typography.labelLarge     // Chữ trên button
+- Button(): Nút chính, dùng cho hành động quan trọng nhất của màn hình
+    + ElevatedButton: Nút có cảm giác nổi hơn nhờ elevation
+    + FilledTonalButton: Nút màu nhẹ hơn Button, phù hợp cho hành động phụ
+    + OutlinedButton: Nút có viền, thường dùng cho hành động phụ như Hủy, Quay lại.
+    + IconButton: Nút chỉ có icon, thường dùng ở thanh trên cùng
+        VD: IconButton(onClick = { }) {
+                Icon(
+                    imageVector = Icons.Default.Favorite, // nếu báo lỗi import thêm : import androidx.compose.material.icons.Icons
+                                                                                       import androidx.compose.material.icons.filled.Favorite
+                    contentDescription = "Yêu thích"
+                )
+            }
+    + Card(): dùng để nhóm thông tin liên quan thành một khối
+        - Thường dùng cho: sản phẩm, đơn hàng, bài viết, thông tin người dùng, thống kê
+    + TextField và OutlinedTextField: là ô để người dùng nhập dữ liệu.
+        - VD: var email by remember { mutableStateOf("") }
+              OutlinedTextField(
+                  value = email, //dữ liệu đang hiển thị trong ô nhập
+                  onValueChange = { email = it }, // chạy khi người dùng gõ
+                  label = { Text("Email") }, //nhãn của ô nhập.
+                  modifier = Modifier.fillMaxWidth(),
+                  singleLine = true //chỉ cho nhập một dòng
+              )
+        - TextField có nền đầy hơn, OutlinedTextField có viền, rất phổ biến trong form Login/Register
+    + Checkbox: Dùng khi người dùng có thể chọn hoặc bỏ chọn nhiều lựa chọn.
+    + RadioButton: Dùng khi người dùng chỉ được chọn một trong nhiều lựa chọn
+        - VD: var gender by remember { mutableStateOf("Nam") }
+              Row(verticalAlignment = Alignment.CenterVertically) {
+                  RadioButton(
+                      selected = gender == "Nam",
+                      onClick = { gender = "Nam" }
+                  )
+                  Text("Nam")
+                  RadioButton(
+                      selected = gender == "Nữ",
+                      onClick = { gender = "Nữ" }
+                  )
+                  Text("Nữ")
+              }
+    + Switch: dùng để bật tắt một cài đặt
+        VD: Text(
+                    text = "Bật thông báo",
+                    modifier = Modifier.weight(1f)
+                )
+                Switch(
+                    checked = notificationEnabled,
+                    onCheckedChange = { notificationEnabled = it }
+                )
+    + Slider(): Dùng khi người dùng chọn một giá trị trong khoảng
+        - VD: var volume by remember { mutableFloatStateOf(50f) }
+              Column {
+                  Text("Âm lượng: ${volume.toInt()}")
+                  Slider(
+                      value = volume,
+                      onValueChange = { volume = it },
+                      valueRange = 0f..100f
+                  )
+              }
+    + Scaffold: là “khung sườn” cho một màn hình Material3. Nó giúp đặt sẵn
+        - topBar: thanh trên
+        - bottomBar: thanh dưới
+        - floatingActionButton: nút tròn nổi
+        - snackbarHost: thông báo ngắn.
+        - content: nội dung chính.
+
+        - VD: Scaffold(
+                  topBar = {
+                      TopAppBar(
+                          title = { Text("Trang chủ") }
+                      )
+                  },
+                  floatingActionButton = {
+                      FloatingActionButton(onClick = { }) {
+                          Text("+")
+                      }
+                  }
+              ) { innerPadding -> // Giúp tránh cho nội dung bị che bới TopAppBar, BottomAppBar hoặc FAB
+                  Column(
+                      modifier = Modifier
+                          .fillMaxSize()
+                          .padding(innerPadding)
+                          .padding(16.dp)
+                  ) {
+                      Text("Nội dung màn hình")
+                  }
+              }
+
+State
+    - mutableStateOf(): tạo một vùng dữu liệu mà compose có thể theo dõi
+        VD:     val countState = remember {
+                    mutableStateOf(0)
+                }
+    - remember: giúp giữ lại State khi Compose vẽ lại UI
+    - rememberSaveable: để giữ các dữ liệu đơn giản khi Activity bị tạo lại do thay đổi cấu hình
+        VD: var name by rememberSaveable {
+                mutableStateOf("")
+            }
+    - FLow hoạt động
+        State -> Composable đọc State -> UI hiển thị State -> Người dùng thao tác -> Callback thay đổi State -> UI cập nhật
+    - State Hoisting: đưa State lên Composable cha
+        + UI con thường không tự giữ state. Thay vào đó, state nằm ở Composable cha hoặc ViewModel, rồi truyền xuống qua tham số.
+
+Recomposition: Khi dữ liệu Compose đang theo dõi thay đổi, Compose gọi lại Composable đã đọc dữ liệu đó.
+    -Skip Recomposition: Compose có thể bỏ qua một Composable nếu tham số truyền vào không đổi.
+LaunchedEffect: Nếu cần chạy một hành động khi Composable xuất hiện hoặc khi một giá trị thay đổi, dùng LaunchedEffect
+    VD: @Composable
+        fun WelcomeScreen() {
+            LaunchedEffect(Unit) { //Unit nghĩa là key không đổi
+                println("Chạy một lần khi WelcomeScreen vào Composition")
+            }
+            Text("Chào mừng")
+        }
+    - Trong app dùng MVVM, LaunchedEffect thường dùng để gửi event một lần, điều khiển navigation, hiển thị snackbar hoặc gọi hàm khởi tạo phụ thuộc vào tham số màn hình. Dữ liệu chính vẫn nên do ViewModel quản lý.
+

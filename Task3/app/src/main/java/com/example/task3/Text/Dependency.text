@@ -1,0 +1,40 @@
+Dependency Injection (DI): một class không tự tạo object mà nó cần, mà object đó được "cấp vào" từ bên ngoài
+ - Hilt tự động
+    + Tạo object vần thiết
+    + quản lý vòng đời object.
+    + truyền object vào Activity, Fragment, ViewModel, Repository, ...
+    + giảm việc viết code khởi tạo thủ công
+    + Giúp code theo kiến trúc MVVM sạch hơn
+
+    + Luồng phổ biến: Compose Screen -> ViewModel -> Repository -> API / Database / DataSource
+ - Các annotation quan trọng
+        | Annotation           | Dùng để làm gì?                                  |
+        | -------------------- | ------------------------------------------------ |
+        | `@HiltAndroidApp`    | Khởi tạo Hilt cho toàn bộ app                    |
+        | `@AndroidEntryPoint` | Cho phép Activity hoặc Fragment nhận dependency  |
+        | `@HiltViewModel`     | Báo cho Hilt biết đây là ViewModel               |
+        | `@Inject`            | Yêu cầu Hilt tự tạo hoặc tự truyền dependency    |
+        | `@Module`            | Nơi khai báo cách tạo object                     |
+        | `@InstallIn`         | Chỉ định vòng đời của dependency                 |
+        | `@Provides`          | Dùng khi không thể gắn `@Inject` vào constructor |
+        | `@Binds`             | Dùng để map interface sang class implement       |
+        | `@Singleton`         | Chỉ tạo một object trong toàn bộ app             |
+
+    + @Inject constructor(): Dùng khi class của bạn tự tạo được bình thường.
+    + @Binds: Dùng khi bạn inject bằng interface.
+    + @Provides: Dùng khi bạn không thể thêm @Inject constructor() vào class.
+
+@HiltAndroidApp
+→ Khởi động Hilt cho toàn app
+@AndroidEntryPoint
+→ Cho phép Activity/Fragment dùng Hilt
+@HiltViewModel
+→ Khai báo ViewModel do Hilt tạo
+@Inject constructor()
+→ Hilt tự tạo object qua constructor
+@Binds
+→ Interface dùng class implement nào
+@Provides
+→ Tự viết hàm tạo object từ thư viện ngoài
+@Singleton
+→ Toàn app dùng chung một object

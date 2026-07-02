@@ -1,0 +1,39 @@
+Modifier trong Jetpack Compose
+Modifier: là đối tượng dùng để trang trí hoặc thay đổi cách một Composable hiển thị và hoạt động
+VD: Text(
+        text = "Xin chào",
+        modifier = Modifier
+            .fillMaxWidth()// mở rộng hết chiều ngang
+            .padding(16.dp)// các mép 16
+            .background(Color.Yellow)// có nền vàng
+            .clickable { // có thể bấm
+                println("Đã bấm")
+            }
+    )
+- cú pháp cơ bản: thông thường bắt đầu bằng Modifier sau đó nối các hàm bằng dấu chấm
+- Modifier được áp dụng theo thứ tự từ trên xuống dưới
+    + fillMaxSize(): Làm Composable chiếm toàn bộ không gian mà cha cho phép
+    + fillMaxWidth(): Chiếm toàn bộ chiều rộng có thể dùng
+    + fillMaxHeight(): Chiếm toàn bộ chiều cao có thể dùng
+    + size(): Đặt cả chiều rộng và chiều cao
+    + width() và height(): Dùng khi chỉ muốn đặt một chiều
+    + padding(): tạo khoảng cách
+    + weight(): dùng để chia không gian còn lại giữa các phần tử
+        chỉ dùng đúng ngữ cảnh trong Row, Column hoặc scope layout tương ứng
+    + background(): màu nền
+    + border(): viền
+    + clip(): cắt nội dung theo một hình dạng, ví dụ bo góc
+        VD: Image(
+                painter = painterResource(R.drawable.avatar),
+                contentDescription = "Avatar",
+                modifier = Modifier
+                    .size(100.dp)
+                    .clip(CircleShape) //avatar hình tròn
+            )
+    + clickable(): bắt sự kiện bấm
+        VD: Text(
+                text = "Quên mật khẩu?",
+                modifier = Modifier.clickable {
+                    println("Mở màn hình quên mật khẩu")
+                }
+            )

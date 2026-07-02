@@ -23,3 +23,12 @@ ViewModel: là một lớp thuộc Android jetpack -> lưu trữ và quản lý 
 State: là dữ liệu quyết định giao diện đang hiển thị như thế nào
 StateFlow: là 1 loại Flow dùng để lưu trữ một giá trị hiện tại(state) và tự động phát giá trị mới đến tất cả nơi đang lắng nghe khi state thay đổi
 -> StateFlow là "biến có thể quan sát được"
+
+Navigation Compose: là thư viện chính thức của Android để điều hướng giữa các @Composable trong ứng dụng Compose
+      -> Nó giúp bạn khai báo các màn hình, chuyển màn hình bằng navigate(), và quay lại bằng popBackStack()
+    - Các thành phần chính:
+        + NavController: đối tượng điều khiển việc chuyển màn hình
+        + NavHost: nơi khai báo danh sách màn hình và màn hình bắt đầu.
+        + composable(route): khai báo một màn hình có đường dẫn riêng.
+        + navigate(route): chuyển đến màn hình khác.
+        + popBackStack(): quay về màn hình trước

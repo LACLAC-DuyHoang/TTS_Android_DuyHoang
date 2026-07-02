@@ -1,0 +1,34 @@
+Lifecycle (vòng đời): là quá trình một màn hình được tạo, hiển thị, tạm dừng và bị hủy bỏ
+- Activity: Một Activity = Một màn hình của ứng dụng.
+  Lifecycle: là Vòng đời của Activity từ lúc được tạo cho đến khi bị hủy.
+      Được tạo -> Hiển thị -> Người dùng sử dụng -> Ẩn -> Bị hủy
+      + Các hàm Lifecycle
+          onCreate() -> onStart() -> onResume() -> Activity đang chạy -> onPause() -> onStop() -> onDestroy()
+
+      - onCreate(): hàm đầu tiên được gọi dùng để tạo giao diện, khởi tạo ViewModel
+        , khởi tạo biến,đọc dữ liệu Intent, kết nối Database, đăng ký Observer
+      - onStart(): hàm được gọi khi Activity bắt đầu hiển thị với người dùng nhưng chưa tương tác.
+      - onResume(): hàm được gọi khi Activity bắt đầu tương tác với người dùng.
+      - onPause(): hàm được gọi khi Activity không còn tương tác (bị che khuất một phần) VD: có cuộc gọi đến.
+      - onStop(): hàm được gọi khi Activity không còn hiển thị (bị che khuất hoàn toàn).
+      - onDestroy(): hàm cuối cùng được gọi trước khi Activity bị hủy hoàn toàn khỏi bộ nhớ.
+
+ViewModel: là một lớp thuộc Android jetpack -> lưu trữ và quản lý dữ liệu (UI State) cho giao
+      - tách logic xử lý ra khỏi Activity hoặc Composable
+  -> View là nơi chứa dữ liệu và logic giao diện
+    - Có 2 nhiệm vụ chính:
+        + Giữ dữ liệu Ui
+        + Giữ dữ liệu khi Activity/ Fragment bị tạo lại(Ví dụ: xoay màn hình)
+
+State: là dữ liệu quyết định giao diện đang hiển thị như thế nào
+StateFlow: là 1 loại Flow dùng để lưu trữ một giá trị hiện tại(state) và tự động phát giá trị mới đến tất cả nơi đang lắng nghe khi state thay đổi
+-> StateFlow là "biến có thể quan sát được"
+
+Navigation Compose: là thư viện chính thức của Android để điều hướng giữa các @Composable trong ứng dụng Compose
+      -> Nó giúp bạn khai báo các màn hình, chuyển màn hình bằng navigate(), và quay lại bằng popBackStack()
+    - Các thành phần chính:
+        + NavController: đối tượng điều khiển việc chuyển màn hình
+        + NavHost: nơi khai báo danh sách màn hình và màn hình bắt đầu.
+        + composable(route): khai báo một màn hình có đường dẫn riêng.
+        + navigate(route): chuyển đến màn hình khác.
+        + popBackStack(): quay về màn hình trước

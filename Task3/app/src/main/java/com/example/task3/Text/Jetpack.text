@@ -1,0 +1,142 @@
+Jetpack Compose: dùng để xây dựng giao diện người dùng bằng Kotlin, theo hướng khai báo (Declarative UI)
+   -> Compose cho phép bạn viết giao diện bằng Kotlin thay vì XML
+- Compose: là (Declarative UI) khai báo giao diện người dùng
+  Trong Compose
+   giao diện được tạo từ các hàm, xây dựng giao diện bằng cách ghép nhiều Composable nhỏ lại
+- Composable: Composable là một hàm Kotlin được đánh dấu bằng @Composable để mô tả giao diện người dùng
+- Material3: là thư viện chính thức của Google dành cho Jetpack Compose, cung cấp các thành phần UI theo chuẩn Material Design 3
+  VD: Button(), Text(), Card(), TextField(), Scaffold(), TopAppBar()
+- Composable Function: Function này không dùng để tính toán, mà dùng để tạo giao diện
+    + setContent(): Trong MainActivity có ý nghĩa Toàn bộ giao diện của Activity sẽ được xây dựng bằng Compose.
+    + Composable có thể gọi Composable khác
+        VD: @Composable
+            fun Title() {
+                Text("Android")
+            }
+            @Composable
+            fun HomeScreen() {
+                Title()
+            }
+    + @Preview: Compose hỗ trợ xem trước giao diện mà không cần chạy ứng dụng
+
+Layout
+- Column: là Layout sắp xếp các phần tử theo chiều dọc (Vertical)
+- Row: là Layout sắp xếp các phần tử theo chiều ngang
+- Box: cho phép xếp chồng(overlay) các Composable lên nhau -> như đặt nhiều tờ giấy lên cùng 1 vị trí
+    VD: Box {
+            Image(...)
+            Text("Compose")
+        } // chữ hiện trên khu vực ảnh
+- Spacer: dùng để tạo khoảng trống giữa các Composable
+    VD: Text("Android")
+        Spacer(modifier = Modifier.height(20.dp)) //Spacer theo chiều dọc
+        Text("Compose")  //
+- Surface: là một vùng chứa (container) theo chuẩn Material Design
+    Có thể có: + có màu nền
+                + có bo góc
+                + Có đổ bóng
+                + có viền
+                + Áp dụng theme Material
+    VD: Surface(
+            tonalElevation = 4.dp,// đổ bóng
+            shape = RoundedCornerShape(12.dp) //có bo góc
+        ) {
+            Text(
+                text = "Xin chào",
+                modifier = Modifier.padding(16.dp)
+            )
+        }
+
+- Alignment: Quy định các phần tử được căn ở đâu
+VD: Column(
+        horizontalAlignment = Alignment.CenterHorizontally // căn ở giữa
+    ){ }
+
+- Arrangement: quy định khoảng cách và cách phân bố giữa các phần tử
+VD: Column(
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) { }
+
+
+LAZY
+Lazy: nghĩa là Compose chỉ tạo các item đang nhìn thấy trên màn hình và một ít item gần đó.
+      Vì vậy nó phù hợp với danh sách dài như sản phẩm, công việc, tin nhắn hoặc đơn hàng
+    - LazyColumn: hiển thị các item theo chiều dọc, giống RecyclerView dọc
+        VD; @Composable
+            fun SimpleTodoList() {
+                val todos = listOf(
+                    "Học Kotlin",
+                    "Học Jetpack Compose",
+                    "Làm bài tập"
+                )
+                LazyColumn {
+                    items(todos) { todo ->
+                        Text(
+                            text = todo,
+                            modifier = Modifier.padding(16.dp)
+                        )
+                    }
+                }
+            }
+    -items() và item()
+        + item(): thêm một phần tử đơn lẻ, ví dụ tiêu đề, banner hoặc loading
+        + items(): lặp qua danh sách để tạo nhiều item.
+        + key: định danh ổn định cho mỗi item
+    - LazyListState: là state lưu vị trí cuộn của danh sách.
+    - LazyRow: hiển thị danh sách theo chiều ngang ( thường dùng cho dang mục sản phẩm,Tag, bộ lọc,Danh sách ảnh ngang, Danh sách phim/bài viết ngang.
+    - LazyVerticalGrid: Dùng để hiển thị dạng lưới, ví dụ danh sách sản phẩm.
+        VD: @Composable
+            fun ProductGrid(products: List<Product>) {
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    contentPadding = PaddingValues(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    items(
+                        items = products,
+                        key = { product -> product.id }
+                    ) { product ->
+                        ProductItem(product = product)
+                    }
+                }
+            }
+    - animateItem(): animation khi thêm/xóa/sắp xếp
+
+Theme: là hệ thống quy định giao diện chung cho toàn bộ app: màu sắc, kiểu chữ và bo góc.
+       Thay vì mỗi màn hình tự đặt màu xanh, cỡ chữ hoặc bo góc riêng, app lấy các giá trị từ MaterialTheme
+    - MaterialTheme
+        VD: @Composable
+            fun MyAppTheme(
+                darkTheme: Boolean = isSystemInDarkTheme(),
+                content: @Composable () -> Unit
+            ) {
+                MaterialTheme(
+                    //kiểm tra thiết bị đang dùng Light/Dark mode.
+                    colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme, // colorScheme: chọn bộ màu phù hợp.
+                    typography = AppTypography, //typography: chọn bộ kiểu chữ
+                    shapes = AppShapes, //shapes: chọn bộ bo góc
+                    content = content //content: toàn bộ UI nằm bên trong theme
+                )
+            }
+    - ColorScheme: là bộ màu theo chuẩn Material3
+    | Màu                  | Dùng cho                                 |
+    | -------------------- | ---------------------------------------- |
+    | `primary`            | Hành động chính: button chính, điểm nhấn |
+    | `onPrimary`          | Màu nội dung nằm trên `primary`          |
+    | `primaryContainer`   | Nền nhấn nhẹ                             |
+    | `onPrimaryContainer` | Chữ/icon trên `primaryContainer`         |
+    | `secondary`          | Hành động hoặc điểm nhấn phụ             |
+    | `tertiary`           | Nhóm nhấn thứ ba                         |
+    | `background`         | Nền toàn màn hình                        |
+    | `onBackground`       | Chữ trên `background`                    |
+    | `surface`            | Nền card, dialog, vùng chứa              |
+    | `onSurface`          | Chữ/icon trên `surface`                  |
+    | `surfaceVariant`     | Nền phụ                                  |
+    | `onSurfaceVariant`   | Nội dung trên nền phụ                    |
+    | `error`              | Báo lỗi                                  |
+    | `onError`            | Nội dung trên nền lỗi                    |
+    | `outline`            | Viền                                     |
+
+    - Typography: quy định kiểu chữ thống nhất của app
+    - Shapes: quy định mức độ bo góc thống nhất

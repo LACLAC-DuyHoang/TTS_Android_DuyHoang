@@ -1,0 +1,23 @@
+Networking : là việc ứng dụng giao tiếp với server qua Internet
+VD: app gọi API thời tiết:https://api.example.com/weather?city=Hanoi -> Server trả về JSON
+Andoird sẽ: Gửi request lên API, Nhận response từ server, Đổi JSON thành object Kotlin, Hiển thị dữ liệu lên màn hình, Xử lý trạng thái đang tải, lỗi mạng hoặc không có dữ liệu.
+- Retrofit và OkHttp
+    + Retrofit: là thư viện giúp bạn kha báo API bằng interface Kotlin rất dễ đọc.
+    + OkHttp: là thư viện thực sự thực hiện việc kết nối mạng, gửi HTTP request và nhận HTTP response.
+
+                | Thư viện                             | Vai trò                                                  |
+                | ------------------------------------ | -------------------------------------------------------- |
+                | OkHttp                               | “Người đi giao thư”: gửi request và nhận response        |
+                | Retrofit                             | “Người phiên dịch”: giúp bạn viết API gọn bằng interface |
+                | Kotlinx Serialization / Gson / Moshi | Đổi JSON thành Kotlin object                             |
+                | Coroutine                            | Chạy tác vụ mạng không làm treo app                      |
+                | Flow                                 | Phát dữ liệu/trạng thái liên tục cho UI                  |
+                | Coil / Glide                         | Tải và hiển thị ảnh từ URL                               |
+
+        | Thư mục      | Nhiệm vụ                         |
+        | ------------ | -------------------------------- |
+        | `model`      | Class đại diện dữ liệu JSON      |
+        | `api`        | Nơi khai báo API Retrofit        |
+        | `repository` | Nơi lấy dữ liệu từ API           |
+        | `ViewModel`  | Xử lý logic, trạng thái màn hình |
+        | `ui`         | Giao diện Compose                |

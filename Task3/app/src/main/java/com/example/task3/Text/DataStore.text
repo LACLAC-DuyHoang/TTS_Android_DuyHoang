@@ -1,0 +1,11 @@
+DataStore là cách Android hiện đại khuyến nghị để lưu các dữ liệu nhỏ dạng key–value, thay cho SharedPreferences
+Ví dụ dữ liệu phù hợp để lưu: Trạng thái dark mode.
+                              Người dùng đã đăng nhập hay chưa.
+                              Tên người dùng.
+                              Ngôn ngữ ứng dụng.
+                              Cài đặt bật/tắt thông báo.
+                              Lần đầu mở app hay không.
+-> Không nên dùng để lưu danh sách dữ liệu lớn như sản phẩm, đơn hàng, sinh viên. Trường hợp đó dùng Room Database
+Có hai loại DataStore:
+    - Preferences DataStore: lưu key–value, giống SharedPreferences. Đây là loại bạn nên học trước
+    - Proto DataStore: lưu object có cấu trúc bằng Protocol Buffers; dùng khi app có settings phức tạp
